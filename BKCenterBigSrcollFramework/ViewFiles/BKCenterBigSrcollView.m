@@ -13,6 +13,7 @@
 @property (nonatomic, strong) UIScrollView *mainScrollView;
 @property (nonatomic, assign) NSInteger numOfDisplayImageView;
 @property (nonatomic, strong) NSMutableArray *mainImageNameMarray;
+@property (nonatomic, strong) NSMutableArray *backgroundNameMarray;
 @property (nonatomic, strong) UIScrollView *gestureControlScrollView;
 
 @property (nonatomic, strong) NSMutableArray *mArrayOfDisplayImageView;
@@ -29,6 +30,7 @@
     if (self)
     {
         self.mainImageNameMarray = [[NSMutableArray alloc] init];
+        self.backgroundNameMarray = [[NSMutableArray alloc] init];
         self.mArrayOfDisplayImageView = [[NSMutableArray array] init];
     }
     return self;
@@ -44,17 +46,19 @@
 }
 
 
-- (instancetype)initWithImageNameArray:(NSArray*)imageNameArray
+- (instancetype)initWithImageNameArray:(NSArray*)imageNameArray withBackgroundNameArray:(NSArray*)backgroundNameArray
 {
     self = [super init];
     if (self)
     {
         self.mainImageNameMarray = [NSMutableArray arrayWithArray:imageNameArray];
+        self.backgroundNameMarray = [NSMutableArray arrayWithArray:backgroundNameArray];
         self.mArrayOfDisplayImageView = [[NSMutableArray array] init];
         
     }
     return self;
 }
+
 
 //[设置主试图坐标]方法
 - (void)setPositionWithX:(CGFloat)x Y:(CGFloat)y
@@ -63,6 +67,7 @@
     self.y = y;
 }
 
+
 //[设置主试图大小]方法
 - (void)setSizeWithWidth:(CGFloat)width Height:(CGFloat)height
 {
@@ -70,10 +75,18 @@
     self.height = height;
 }
 
+
 //[添加小型图标]放入滑动试图方法
 - (void)addImageNameToCenterBigSrcollView:(NSString*)imageName
 {
     [self.mainImageNameMarray addObject:imageName];
+}
+
+
+//[添加背景图像]放入滑动试图方法
+- (void)addBackgroundNameToCenterBigSrcollView:(NSString*)backgroundName
+{
+    [self.backgroundNameMarray addObject:backgroundName];
 }
 
 
@@ -98,10 +111,12 @@
     
     self.backgroundColor = [UIColor lightGrayColor];
     self.userInteractionEnabled = YES;
+    self.image = [UIImage imageNamed:self.backgroundNameMarray[0]];
     
     self.numOfDisplayImageView = 3;
     self.rateOfBig = 1.20;
 }
+
 
 //[加载小型图标试图]方法
 - (void)installDisplayImageViewToMainScrollView
@@ -154,19 +169,19 @@
 }
 
 
-
 //UIScrollView[滑动减速结束后]监控方法
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     self.currentSelectImgView.transform = CGAffineTransformMakeScale(1, 1);
     
     CGFloat gestureControlScrollViewX = scrollView.contentOffset.x;
-    NSInteger indexOfSelectImgBtn = gestureControlScrollViewX/(scrollView.width);
+    NSInteger indexOfSelectImgView = gestureControlScrollViewX/(scrollView.width);
     
-    self.currentSelectImgView = self.mArrayOfDisplayImageView[indexOfSelectImgBtn];
+    self.currentSelectImgView = self.mArrayOfDisplayImageView[indexOfSelectImgView];
     self.currentSelectImgView.transform = CGAffineTransformMakeScale(self.rateOfBig, self.rateOfBig);
     [self.mainScrollView bringSubviewToFront:self.currentSelectImgView];
     
+    self.image = [UIImage imageNamed:self.backgroundNameMarray[indexOfSelectImgView]];
 }
 #pragma mark ---------------------------------------------------------------------------
 
@@ -187,6 +202,7 @@
     
     return _mainScrollView;
 }
+
 
 /**[滑动手势UIScrollView试图]预加载**/
 -(UIScrollView *)gestureControlScrollView
