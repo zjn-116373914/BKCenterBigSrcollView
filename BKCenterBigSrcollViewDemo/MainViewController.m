@@ -19,12 +19,12 @@
 {
     [super viewDidLoad];
     
-    /**框架外[核心代码]**/
+    //框架外[核心代码]
     NSArray *imgNameArray = @[@"ScrollViewImage_1",@"ScrollViewImage_2",@"ScrollViewImage_3",@"ScrollViewImage_4"];
     NSArray *backgroundNameArray = @[@"Background_1",@"Background_2",@"Background_3",@"Background_4"];
     BKCenterBigSrcollView *mainScrollView = [[BKCenterBigSrcollView centerBigScroll] initWithImageNameArray:imgNameArray withBackgroundNameArray:backgroundNameArray];
     [mainScrollView loadCenterBigSrcollViewMainFunction];
-    /**--------------------------------------**/
+    //--------------------------------------------------------------------------------
     
     [self.view addSubview:mainScrollView];
     

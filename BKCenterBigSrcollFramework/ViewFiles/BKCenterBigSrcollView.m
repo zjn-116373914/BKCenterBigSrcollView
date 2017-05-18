@@ -1,7 +1,7 @@
 #import "BKCenterBigSrcollView.h"
 
 
-//宏定义屏幕长宽以及其他参数
+/**宏定义屏幕长宽以及其他参数**/
 #define ScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define HeadHeight    20
@@ -39,7 +39,7 @@
 #pragma mark ---------------------------------------------------------------------------
 
 #pragma mark - [外部开放]方法
-//[初始化]方法
+/**[初始化]方法**/
 + (instancetype)centerBigScroll
 {
     return  [[self alloc] init];
@@ -60,7 +60,7 @@
 }
 
 
-//[设置主试图坐标]方法
+/**[设置主试图坐标]方法**/
 - (void)setPositionWithX:(CGFloat)x Y:(CGFloat)y
 {
     self.x = x;
@@ -68,7 +68,7 @@
 }
 
 
-//[设置主试图大小]方法
+/**[设置主试图大小]方法**/
 - (void)setSizeWithWidth:(CGFloat)width Height:(CGFloat)height
 {
     self.width = width;
@@ -76,21 +76,21 @@
 }
 
 
-//[添加小型图标]放入滑动试图方法
+/**[添加小型图标]放入滑动试图方法**/
 - (void)addImageNameToCenterBigSrcollView:(NSString*)imageName
 {
     [self.mainImageNameMarray addObject:imageName];
 }
 
 
-//[添加背景图像]放入滑动试图方法
+/**[添加背景图像]放入滑动试图方法**/
 - (void)addBackgroundNameToCenterBigSrcollView:(NSString*)backgroundName
 {
     [self.backgroundNameMarray addObject:backgroundName];
 }
 
 
-//最终加载[主方法]
+/**最终加载[主方法]**/
 - (void)loadCenterBigSrcollViewMainFunction
 {
     [self installCenterBigSrcollView];
@@ -101,7 +101,7 @@
 #pragma mark ---------------------------------------------------------------------------
 
 #pragma mark - [基本控件加载]方法
-//[加载主视图]方法
+/**[加载主视图]方法**/
 - (void)installCenterBigSrcollView
 {
     self.width = ScreenWidth;
@@ -118,7 +118,7 @@
 }
 
 
-//[加载小型图标试图]方法
+/**[加载小型图标试图]方法**/
 - (void)installDisplayImageViewToMainScrollView
 {
     CGFloat displayImageViewWidth = (1.0*self.mainScrollView.width)/self.numOfDisplayImageView;
@@ -143,13 +143,14 @@
         
         [self.mainScrollView addSubview:displayImageView];
         
-        /**[标记]当前选中[图像按钮控件]**/
+        //[标记]当前选中[图像按钮控件]
         if(i == 1)
         {
             self.currentSelectImgView = displayImageView;
             self.currentSelectImgView.transform = CGAffineTransformMakeScale(self.rateOfBig, self.rateOfBig);
             [self.mainScrollView bringSubviewToFront:self.currentSelectImgView];
         }
+        //--------------------------------------------------------------------------------
         
         [self.mArrayOfDisplayImageView addObject:displayImageView];
     }
@@ -157,7 +158,7 @@
 #pragma mark ---------------------------------------------------------------------------
 
 #pragma mark - UIScrollViewDelegate - ScrollView协议方法
-//UIScrollView[滑动任何时刻]监控方法
+/**UIScrollView[滑动任何时刻]监控方法**/
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat gestureControlScrollViewX = scrollView.contentOffset.x;
@@ -169,7 +170,7 @@
 }
 
 
-//UIScrollView[滑动减速结束后]监控方法
+/**UIScrollView[滑动减速结束后]监控方法**/
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     self.currentSelectImgView.transform = CGAffineTransformMakeScale(1, 1);
